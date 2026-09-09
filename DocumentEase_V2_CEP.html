@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DocumentEase V2 — Smart Document Assistant</title>
+<style>
+:root{--p:#315bea;--p2:#6d4ce6;--ink:#172033;--muted:#667085;--bg:#f5f7fb;--card:#fff;--line:#e5e9f2;--ok:#168a43;--bad:#d73535;--gold:#a96700}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+header{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:20}.logo{font-size:23px;font-weight:900}.logo b{color:var(--p)}nav button{border:0;background:none;margin-left:18px;color:#475467;font-weight:700}.avatar{width:36px;height:36px;border-radius:50%;border:0;background:#eef2ff;color:var(--p);font-weight:800}
+.hero{background:linear-gradient(135deg,#315bea,#6d4ce6);color:#fff;padding:65px 6%}.hero-inner{max-width:1100px;margin:auto}.pill{display:inline-block;background:#ffffff22;border:1px solid #ffffff33;padding:7px 12px;border-radius:30px;font-size:12px}.hero h1{font-size:46px;line-height:1.08;margin:18px 0 12px}.hero p{font-size:18px;max-width:700px;line-height:1.6;opacity:.92}.search{display:flex;max-width:720px;background:#fff;padding:7px;border-radius:13px;margin-top:25px}.search input{flex:1;border:0;outline:0;padding:13px}.primary{border:0;background:var(--p);color:#fff;padding:11px 16px;border-radius:9px;font-weight:800}.hero .primary{background:#172033}
+.container{max-width:1120px;margin:32px auto;padding:0 20px}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:20px}.section-head h2{margin:0;font-size:27px}.muted{color:var(--muted)}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.filter{border:1px solid var(--line);background:#fff;border-radius:20px;padding:8px 13px}.filter.active{background:#eef2ff;border-color:#ccd7ff;color:var(--p)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:17px}.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:22px;box-shadow:0 8px 25px #17203309}.service{cursor:pointer;transition:.2s}.service:hover{transform:translateY(-4px);border-color:#b9c7ff}.icon{font-size:31px}.tag{display:inline-block;background:#f0f2f7;color:#475467;border-radius:7px;padding:4px 8px;font-size:11px;margin-top:10px}.service h3{margin:11px 0 7px}.service p{font-size:14px;line-height:1.5;color:var(--muted)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:19px;padding:25px;box-shadow:0 10px 30px #1720330b}.top{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.back,.secondary{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:9px;font-weight:700}.progress-bg{height:10px;background:#e9edf5;border-radius:20px;overflow:hidden}.progress{height:100%;width:0;background:var(--p);transition:.25s}.ptext{display:flex;justify-content:space-between;font-size:13px;margin:9px 0 17px}.group{border:1px solid var(--line);border-radius:13px;overflow:hidden;margin:12px 0}.group h3{background:#fafbfe;margin:0;padding:13px;font-size:15px}.doc{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;border-top:1px solid var(--line)}.doc label{display:flex;gap:10px;align-items:center;font-weight:600}.doc input{width:18px;height:18px;accent-color:var(--p)}.status{font-size:12px;font-weight:800}.ok{color:var(--ok)}.miss{color:var(--bad)}.warn{color:var(--gold)}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.result{margin-top:18px;background:#f8faff;border:1px solid #dbe4ff;border-radius:13px;padding:17px}.result b{color:var(--p)}
+.login-wrap{min-height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center;padding:30px;background:linear-gradient(135deg,#eef2ff,#f7f5ff)}.login{width:410px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px;box-shadow:0 20px 60px #17203318}.login h1{margin:0 0 8px}.field{margin:14px 0}.field label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}.field input,.field select{width:100%;padding:12px;border:1px solid #d9deea;border-radius:9px;outline:0}.login .primary{width:100%;margin-top:8px}.demo{font-size:12px;color:var(--muted);background:#f7f8fb;padding:10px;border-radius:8px;margin-top:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px;margin-bottom:20px}.stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px}.stat .num{font-size:29px;font-weight:900;margin-top:5px}.dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:18px}.list{margin-top:10px}.list-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.list-row:last-child{border-bottom:0}
+.admin-table{width:100%;border-collapse:collapse}.admin-table th,.admin-table td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:13px}.admin-table th{background:#fafbfe}.danger{border:0;background:#fff0f0;color:var(--bad);padding:8px 11px;border-radius:8px;font-weight:700}
+.modal{position:fixed;inset:0;background:#17203399;display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}.modalbox{background:#fff;width:min(600px,100%);border-radius:18px;padding:24px}.modalbox textarea{width:100%;height:300px;padding:12px;border:1px solid var(--line);border-radius:10px;resize:none}
+.toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:13px 17px;border-radius:10px;display:none;z-index:80}
+footer{background:#172033;color:#dbe2ef;text-align:center;padding:28px;font-size:12px;line-height:1.7;margin-top:50px}
+@media(max-width:760px){.hero h1{font-size:36px}.dash-grid{grid-template-columns:1fr}nav button{display:none}.top{flex-direction:column}.search{display:block;background:transparent}.search input,.search button{width:100%;margin-bottom:7px;border-radius:9px}}
+</style>
+</head>
+<body>
+<header id="header">
+<div class="logo">📋 Document<b>Ease</b></div>
+<nav id="nav"></nav>
+</header>
+
+<section id="loginPage" class="login-wrap">
+<div class="login">
+<h1>Welcome back 👋</h1><p class="muted">Sign in to your DocumentEase dashboard.</p>
+<div class="field"><label>Email</label><input id="email" type="email" placeholder="student@example.com"></div>
+<div class="field"><label>Password</label><input id="password" type="password" placeholder="••••••••"></div>
+<button class="primary" onclick="login()">Login</button>
+<div class="demo"><b>Demo accounts</b><br>User: student@demo.com / 1234<br>Admin: admin@demo.com / admin123</div>
+</div></section>
+
+<div id="app" class="hidden">
+<section class="hero" id="hero">
+<div class="hero-inner">
+<span class="pill">🇮🇳 CEP Project • Smart Document Assistant</span>
+<h1>Know Your Documents<br>Before You Go.</h1>
+<p>Answer simple questions, identify missing documents, save your checklist and prepare before visiting an office, college or examination centre.</p>
+<div class="search"><input id="search" placeholder="Search caste, income, admission, exam..." oninput="renderServices()"><button class="primary" onclick="focusServices()">Find Service</button></div>
+</div></section>
+
+<main class="container">
+<section id="dashboardPage">
+<div class="section-head"><div><h2 id="welcome"></h2><p class="muted">Your document preparation overview.</p></div><button class="primary" onclick="openServices()">+ New Checklist</button></div>
+<div class="stats">
+<div class="stat">📋<div class="muted">Saved checklists</div><div class="num" id="statSaved">0</div></div>
+<div class="stat">✅<div class="muted">Completed</div><div class="num" id="statComplete">0</div></div>
+<div class="stat">⏳<div class="muted">In progress</div><div class="num" id="statProgress">0</div></div>
+<div class="stat">🧾<div class="muted">Services</div><div class="num">15</div></div>
+</div>
+<div class="dash-grid">
+<div class="panel"><h3>Recent Checklists</h3><div id="recent"></div></div>
+<div class="panel"><h3>Quick Actions</h3><div class="list"><div class="list-row"><span>🔎 Find a service</span><button class="secondary" onclick="openServices()">Open</button></div><div class="list-row"><span>💾 Saved checklists</span><button class="secondary" onclick="showSaved()">View</button></div><div class="list-row"><span>👤 Profile</span><button class="secondary" onclick="toast('Profile demo ready')">View</button></div></div></div>
+</div>
+</section>
+
+<section id="servicesPage" class="hidden">
+<div class="section-head"><div><h2>Choose a Service</h2><p class="muted">15 services with guided checklist logic.</p></div><button class="back" onclick="showDashboard()">← Dashboard</button></div>
+<div class="filters"><button class="filter active" onclick="setFilter('All',this)">All</button><button class="filter" onclick="setFilter('Government',this)">Government</button><button class="filter" onclick="setFilter('Education',this)">Education</button><button class="filter" onclick="setFilter('Exams',this)">Exams</button><button class="filter" onclick="setFilter('Identity',this)">Identity</button></div>
+<div class="grid" id="services"></div>
+</section>
+
+<section id="checkPage" class="hidden">
+<div class="panel">
+<div class="top"><div><h2 id="checkTitle"></h2><p class="muted" id="checkMeta"></p></div><button class="back" onclick="openServices()">← Services</button></div>
+<div class="ptext"><b>Checklist completion</b><span id="pct">0%</span></div><div class="progress-bg"><div class="progress" id="bar"></div></div>
+<div id="questionArea"></div>
+<div class="actions"><button class="primary" onclick="saveChecklist()">💾 Save</button><button class="secondary" onclick="downloadChecklist()">⬇️ Download Checklist</button><button class="secondary" onclick="printChecklist()">🖨️ Print</button><button class="secondary" onclick="resetCheck()">↻ Reset</button></div>
+<div class="result" id="result"></div>
+</div>
+</section>
+
+<section id="savedPage" class="hidden">
+<div class="panel"><div class="top"><div><h2>My Saved Checklists</h2><p class="muted">Saved in this prototype's browser storage.</p></div><button class="back" onclick="showDashboard()">← Dashboard</button></div><div id="savedList"></div></div>
+</section>
+
+<section id="adminPage" class="hidden">
+<div class="section-head"><div><h2>🛠️ Admin Panel</h2><p class="muted">Manage the prototype service catalogue and view demo activity.</p></div><button class="back" onclick="showDashboard()">← Dashboard</button></div>
+<div class="stats"><div class="stat">🧾<div class="muted">Services</div><div class="num" id="aServices"></div></div><div class="stat">👥<div class="muted">Demo users</div><div class="num">2</div></div><div class="stat">💾<div class="muted">Saved records</div><div class="num" id="aSaved"></div></div></div>
+<div class="panel"><h3>Service Catalogue</h3><table class="admin-table"><thead><tr><th>Service</th><th>Category</th><th>Groups</th><th>Action</th></tr></thead><tbody id="adminTable"></tbody></table></div>
+</section>
+</main>
+<footer>DocumentEase V2 • CEP Project Prototype<br>Demo login/admin only. Do not enter real passwords or sensitive identity documents. Requirements must be verified with the relevant official authority.</footer>
+</div>
+
+<div class="modal hidden" id="modal"><div class="modalbox"><div class="top"><h2>Checklist</h2><button class="back" onclick="closeModal()">Close</button></div><textarea id="modalText" readonly></textarea></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const services=[
+['caste','⚖️','Caste Certificate','Government','Aaple Sarkar / case dependent',[
+['Identity — choose applicable proof',['Aadhaar Card','PAN Card','Passport','Voter ID / Government ID']],
+['Address — choose applicable proof',['Aadhaar Card','Ration Card','Voter ID','Electricity / Water Bill','Driving Licence']],
+['Supporting evidence — case dependent',['School Leaving Certificate','Father’s Caste Certificate','Relative’s Caste Certificate','Caste Validity Certificate','7/12 or 8-A Extract','Affidavit / Self-Declaration']]
+]],
+['income','💰','Income Certificate','Government','Aaple Sarkar / case dependent',[
+['Identity — choose applicable proof',['Aadhaar Card','PAN Card','Passport','Voter ID / Government ID']],
+['Address — choose applicable proof',['Aadhaar Card','Ration Card','Voter ID','Driving Licence','Electricity Bill']],
+['Income evidence — choose applicable proof',['Form 16 / Salary Proof','Income Tax Statement','Bank Certificate','Talathi / Revenue Report','7/12 and 8-A related proof']]
+]],
+['domicile','🏠','Domicile / Residence','Government','Aaple Sarkar / case dependent',[
+['Identity & address',['Aadhaar Card','Ration Card','Voter ID','Electricity / Water Bill','Rent Receipt']],
+['Residence evidence',['Talathi / Gram Sevak Residence Proof','Property / Registration Proof','7/12 and 8-A Extract']],
+['Age / minor — if applicable',['Birth Certificate','Bonafide Certificate','School Leaving Certificate']],
+['Declaration',['Self-Declaration']]
+]],
+['pan','💳','PAN Card','Identity','Income Tax / NSDL rules',[
+['Identity / address / DOB — choose accepted proof',['Aadhaar Card','Passport','Driving Licence','Voter ID','Birth Certificate']],
+['Application',['Recent Photograph','Signature']]
+]],
+['passport','🛂','Passport Application','Identity','Passport Seva rules',[
+['Identity / address — accepted proof depends on case',['Aadhaar Card','Voter ID','Driving Licence','Electricity Bill / Utility Proof','Rent Agreement']],
+['DOB — accepted proof depends on case',['Birth Certificate','School Leaving Certificate','10th Certificate']],
+['Application',['Photograph where applicable','Appointment / Application Receipt']]
+]],
+['dl','🚗','Driving Licence','Identity','Transport authority rules',[
+['Identity / address',['Aadhaar Card','Passport','Voter ID','Utility Bill']],
+['Age / DOB',['Birth Certificate','10th Certificate','Passport']],
+['Application / test',['Learner Licence where applicable','Application Receipt','Medical Certificate where applicable']]
+]],
+['admission','🎓','College Admission','Education','College / university rules',[
+['Academic',['10th Marksheet','12th Marksheet','Leaving Certificate','Entrance Exam Score / Result']],
+['Identity & photos',['Aadhaar Card','Passport Size Photographs']],
+['Category — if applicable',['Caste Certificate','Caste Validity Certificate','Non-Creamy Layer Certificate','Domicile Certificate','Income Certificate']]
+]],
+['scholarship','🏅','Scholarship Application','Education','Scholarship authority rules',[
+['Identity & education',['Aadhaar Card','Student ID / Bonafide Certificate','Marksheet']],
+['Financial / category — if applicable',['Income Certificate','Caste Certificate','Domicile Certificate','Bank Account Details / Proof']]
+]],
+['exam','📝','Competitive Exam','Exams','Exam authority rules',[
+['Application',['Valid Photo ID','Recent Photograph','Signature','Educational Qualification Details']],
+['Exam day',['Admit Card','Original Valid Photo ID']],
+['Category — if applicable',['Caste Certificate','PwD Certificate','EWS / NCL Certificate']]
+]],
+['jee','🔬','JEE / Engineering Entrance','Exams','NTA / exam authority rules',[
+['Registration',['Valid Photo ID','Recent Photograph','Signature','Class 10 details']],
+['Category — if applicable',['Caste Certificate','EWS Certificate','PwD Certificate']],
+['Exam day',['Admit Card','Original Valid Photo ID']]
+]],
+['cet','🧪','MHT-CET','Exams','State exam authority rules',[
+['Registration',['Valid Photo ID','Recent Photograph','Signature','Academic details']],
+['Category — if applicable',['Caste Certificate','Caste Validity Certificate','Non-Creamy Layer Certificate','EWS Certificate']],
+['Exam day',['Admit Card','Original Valid Photo ID']]
+]],
+['migration','📚','Migration Certificate','Education','Board / university rules',[
+['Academic records',['Semester Marksheet(s)','Leaving Certificate','Final / Provisional Certificate']],
+['Application',['College request / application','Identity proof']]
+]],
+['birth','👶','Birth Certificate','Government','Local registration authority rules',[
+['Identity / parent details',['Parent / Applicant ID Proof','Hospital Record where applicable']],
+['Registration evidence — case dependent',['Hospital Birth Record','Discharge Summary','Affidavit / supporting evidence where applicable']]
+]],
+['incomeexam','💼','Government Job Application','Exams','Recruitment authority rules',[
+['Application',['Valid Photo ID','Educational Certificates','Recent Photograph','Signature']],
+['Category — if applicable',['Caste Certificate','Non-Creamy Layer Certificate','EWS Certificate','PwD Certificate']],
+['Verification — if shortlisted',['Original Certificates','Domicile / Residence Proof where applicable']]
+]],
+['hostel','🏫','Student Hostel Admission','Education','Institution rules',[
+['Student records',['College ID / Bonafide Certificate','Admission Proof','Recent Photograph']],
+['Identity / residence',['Aadhaar Card','Parent / Guardian ID','Address Proof']],
+['Category / financial — if applicable',['Caste Certificate','Income Certificate','Domicile Certificate']]
+]]
+];
+let current=null,filter='All',checks=[],user=null;
+const key='de_v2_state';
+function load(){return JSON.parse(localStorage.getItem(key)||'{"users":[],"saved":[]}')}
+function saveState(x){localStorage.setItem(key,JSON.stringify(x))}
+function login(){
+ const e=document.getElementById('email').value.trim().toLowerCase(),p=document.getElementById('password').value;
+ if((e==='student@demo.com'&&p==='1234')||(e==='admin@demo.com'&&p==='admin123')){user={email:e,admin:e.startsWith('admin')};document.getElementById('loginPage').classList.add('hidden');document.getElementById('app').classList.remove('hidden');buildNav();showDashboard()}
+ else toast('Use the demo credentials shown below the login form.');
+}
+function buildNav(){document.getElementById('nav').innerHTML=`<button onclick="showDashboard()">Dashboard</button><button onclick="openServices()">Services</button><button onclick="showSaved()">My Checklists</button>${user.admin?'<button onclick="showAdmin()">Admin</button>':''}<button onclick="logout()">Logout</button>`}
+function logout(){user=null;document.getElementById('app').classList.add('hidden');document.getElementById('loginPage').classList.remove('hidden')}
+function hidePages(){['dashboardPage','servicesPage','checkPage','savedPage','adminPage'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
+function showDashboard(){hidePages();document.getElementById('dashboardPage').classList.remove('hidden');renderDashboard();window.scrollTo({top:0,behavior:'smooth'})}
+function openServices(){hidePages();document.getElementById('servicesPage').classList.remove('hidden');renderServices();window.scrollTo({top:0,behavior:'smooth'})}
+function showSaved(){hidePages();document.getElementById('savedPage').classList.remove('hidden');renderSaved();window.scrollTo({top:0,behavior:'smooth'})}
+function showAdmin(){if(!user?.admin)return;hidePages();document.getElementById('adminPage').classList.remove('hidden');renderAdmin()}
+function renderDashboard(){
+ const s=load(), mine=s.saved.filter(x=>x.user===user.email),complete=mine.filter(x=>x.pct===100).length;
+ document.getElementById('welcome').textContent='Hello, '+(user.admin?'Admin':'Student')+' 👋';document.getElementById('statSaved').textContent=mine.length;document.getElementById('statComplete').textContent=complete;document.getElementById('statProgress').textContent=mine.filter(x=>x.pct<100).length;
+ document.getElementById('recent').innerHTML=mine.length?mine.slice(-5).reverse().map(x=>`<div class="list-row"><div><b>${x.service}</b><div class="muted">${x.pct}% complete • ${new Date(x.date).toLocaleDateString()}</div></div><button class="secondary" onclick="resume('${x.id}')">Open</button></div>`).join(''):'<p class="muted">No saved checklists yet. Start your first one.</p>';
+}
+function renderServices(){const q=(document.getElementById('search')?.value||'').toLowerCase();document.getElementById('services').innerHTML=services.filter(s=>(filter==='All'||s[3]===filter)&&(s[2].toLowerCase().includes(q)||s[3].toLowerCase().includes(q))).map(s=>`<div class="card service" onclick="openCheck('${s[0]}')"><div class="icon">${s[1]}</div><span class="tag">${s[3]}</span><h3>${s[2]}</h3><p>Guided Yes/No questions and a personalized missing-document checklist.</p></div>`).join('')}
+function setFilter(x,el){filter=x;document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderServices()}
+function openCheck(id,restore){
+ current=services.find(s=>s[0]===id);hidePages();document.getElementById('checkPage').classList.remove('hidden');document.getElementById('checkTitle').textContent=current[1]+' '+current[2];document.getElementById('checkMeta').textContent=`${current[3]} • ${current[4]} • Some items are conditional and may not apply to every applicant.`;
+ checks=[];current[5].forEach((g,gi)=>g[1].forEach((d,di)=>checks.push({gi,di,name:d,yes:false})));
+ if(restore){const saved=load().saved.find(x=>x.id===restore);if(saved)checks.forEach((c,i)=>c.yes=!!saved.checks[i])}
+ renderQuestions();updateCheck()
+}
+function renderQuestions(){let h='';current[5].forEach((g,gi)=>{h+=`<div class="group"><h3>${g[0]}</h3>${g[1].map((d,di)=>{const i=checks.findIndex(c=>c.gi===gi&&c.di===di);return `<div class="doc"><label><input type="checkbox" ${checks[i].yes?'checked':''} onchange="toggle(${i},this.checked)"> ${d}</label><span class="status ${checks[i].yes?'ok':'miss'}">${checks[i].yes?'Yes — Have it':'No — Missing'}</span></div>`}).join('')}</div>`});document.getElementById('questionArea').innerHTML=h}
+function toggle(i,v){checks[i].yes=v;updateCheck()}
+function updateCheck(){const yes=checks.filter(x=>x.yes).length,total=checks.length,pct=Math.round(yes/total*100);document.getElementById('bar').style.width=pct+'%';document.getElementById('pct').textContent=pct+'%';document.querySelectorAll('#questionArea .doc').forEach((d,i)=>{const st=d.querySelector('.status');st.textContent=checks[i].yes?'Yes — Have it':'No — Missing';st.className='status '+(checks[i].yes?'ok':'miss')});const miss=checks.filter(x=>!x.yes).map(x=>x.name);document.getElementById('result').innerHTML=miss.length?`<b>📌 ${yes}/${total} items marked available</b><br><br><b>Missing / not confirmed:</b><br>${miss.map(x=>'❌ '+x).join('<br>')}<br><br><span class="warn">⚠️ Some documents are “choose applicable proof” or case-dependent. Verify the latest official requirement.</span>`:`<b>🎉 All listed items marked available.</b><br>Still verify the latest official checklist before submission.`}
+function saveChecklist(){const s=load(),id=current[0]+'_'+user.email,record={id,user:user.email,service:current[2],checks:checks.map(x=>x.yes),pct:Math.round(checks.filter(x=>x.yes).length/checks.length*100),date:new Date().toISOString()};s.saved=s.saved.filter(x=>x.id!==id);s.saved.push(record);saveState(s);toast('Checklist saved!');renderDashboard()}
+function resume(id){const s=load().saved.find(x=>x.id===id);if(s)openCheck(services.find(x=>x[2]===s.service)[0],id)}
+function renderSaved(){const mine=load().saved.filter(x=>x.user===user.email);document.getElementById('savedList').innerHTML=mine.length?mine.reverse().map(x=>`<div class="list-row"><div><b>${x.service}</b><div class="muted">${x.pct}% • ${new Date(x.date).toLocaleString()}</div></div><div><button class="secondary" onclick="resume('${x.id}')">Open</button> <button class="danger" onclick="deleteSaved('${x.id}')">Delete</button></div></div>`).join(''):'<p class="muted">No saved checklists.</p>'}
+function deleteSaved(id){const s=load();s.saved=s.saved.filter(x=>x.id!==id);saveState(s);renderSaved();renderDashboard();toast('Checklist deleted.')}
+function renderAdmin(){const s=load();document.getElementById('aServices').textContent=services.length;document.getElementById('aSaved').textContent=s.saved.length;document.getElementById('adminTable').innerHTML=services.map(x=>`<tr><td>${x[1]} ${x[2]}</td><td>${x[3]}</td><td>${x[5].length}</td><td><button class="secondary" onclick="openCheck('${x[0]}')">Preview</button></td></tr>`).join('')}
+function downloadChecklist(){const blob=new Blob([makeText()],{type:'text/plain'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`DocumentEase_${current[2].replaceAll(' ','_')}.txt`;a.click();URL.revokeObjectURL(a.href);toast('Checklist downloaded.')}
+function printChecklist(){document.getElementById('modalText').value=makeText();document.getElementById('modal').classList.remove('hidden')}
+function makeText(){let t=`DOCUMENTEASE — DOCUMENT CHECKLIST\n${current[2]}\nGenerated: ${new Date().toLocaleString()}\n\n`;checks.forEach(x=>t+=`${x.yes?'[YES]':'[NO ]'} ${x.name}\n`);t+=`\nNote: Verify current requirements with the relevant official authority.`;return t}
+function closeModal(){document.getElementById('modal').classList.add('hidden')}
+function resetCheck(){checks.forEach(x=>x.yes=false);renderQuestions();updateCheck()}
+function focusServices(){document.getElementById('servicesPage').scrollIntoView({behavior:'smooth'})}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+</script>
+</body>
+</html>
